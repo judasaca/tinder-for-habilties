@@ -1,0 +1,19 @@
+{
+  "name": "tinder_for_habilities",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "tsc": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "5.2.2"
+  },
+  "dependencies": {
+    "express": "4.18.2"
+  }
+}
