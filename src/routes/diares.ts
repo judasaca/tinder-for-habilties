@@ -1,26 +1,23 @@
-import express from 'express'
-import * as diaryServices from '../services/diaryServices'
-const router = express.Router()
+import express from 'express';
+import * as diaryServices from '../services/diaryServices';
+import toNewDiaryEntry from '../utils';
+const router = express.Router();
+
 router.get('/', (_req, res) => {
-  res.send(diaryServices.getEntriesWithoutSensitiveInfo())
-})
+  res.send(diaryServices.getEntriesWithoutSensitiveInfo());
+});
 router.get('/:id', (req, res) => {
-  const diary = diaryServices.findById(parseInt(req.params.id))
-  return (diary != null)
-    ? res.send(diary)
-    : res.sendStatus(404)
-})
+  const diary = diaryServices.findById(parseInt(req.params.id));
+  return diary != null ? res.send(diary) : res.sendStatus(404);
+});
 router.post('/', (req, res) => {
   try {
-    const { date, weather, visibility, comment } = req.body
-    const newDiaryEntry = toNewDiaryEntry(req.body)
-    const addedDiaryEntry = diaryServices.addDiary(newDiaryEntry)
+    const newDiaryEntry = toNewDiaryEntry(req.body);
+    const addedDiaryEntry = diaryServices.addDiary(newDiaryEntry);
+    res.json(addedDiaryEntry);
   } catch (error) {
-    res.status(400).send(error.message)
+    res.status(400).send(error.message);
   }
-  console.log({ date, weather, visibility, comment })
-  console.log(newDiaryEntry)
-  res.json(newDiaryEntry)
-})
+});
 
-export default router
+export default router;
