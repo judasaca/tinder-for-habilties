@@ -17,6 +17,7 @@ Table users {
 Table habilities {
   id integer
   user_id integer
+  hability varchar
 }
 Table transactions {
   id integer
@@ -34,7 +35,9 @@ Table contracts {
   employee integer [note: 'Who works']
   status varchar [note: "reviewing-accepted-rejected-finished-canceled"]
   created_at timestamp
-  hourly_rate integer
+  updated_at timestamp
+  hourly_rate float
+  work_hours integer
   details varchar
 }
 
