@@ -1,5 +1,5 @@
-import { Weather, Visibility } from './types';
-import type { NewDiaryEntry } from './types';
+import { Weather, Visibility } from '../types';
+import type { NewDiaryEntry } from '../types';
 
 const parseComment = (commentFromRequest: any): string => {
   if (!isString(commentFromRequest)) {

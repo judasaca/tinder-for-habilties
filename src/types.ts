@@ -22,3 +22,8 @@ export interface DiaryEntry {
 
 export type NonSensitiveInfoDiaryEntry = Omit<DiaryEntry, 'comment'>;
 export type NewDiaryEntry = Omit<DiaryEntry, 'id'>;
+
+export interface CreateUserInput {
+  username: string;
+  password: string;
+}

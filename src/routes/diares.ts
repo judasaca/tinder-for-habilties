@@ -1,6 +1,6 @@
 import express from 'express';
 import * as diaryServices from '../services/diaryServices';
-import toNewDiaryEntry from '../utils';
+import toNewDiaryEntry from '../utils/prueba';
 const router = express.Router();
 
 router.get('/', (_req, res) => {
