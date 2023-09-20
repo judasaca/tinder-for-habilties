@@ -5,12 +5,16 @@ import toNewUser from '../utils/usersUtils';
 const router = express.Router();
 
 router.post('/', (req, res) => {
-  const newUserInfo = toNewUser(req.body);
-  createUser(newUserInfo)
-    .then(() => res.send('created'))
-    .catch(e => {
-      console.log(e);
-    });
+  try {
+    const newUserInfo = toNewUser(req.body);
+    createUser(newUserInfo)
+      .then(() => res.send('created'))
+      .catch(e => {
+        console.log(e);
+      });
+  } catch {
+    res.sendStatus(401);
+  }
 });
 
 export default router;
