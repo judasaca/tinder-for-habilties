@@ -5,16 +5,23 @@ import toNewUser from '../utils/usersUtils';
 const router = express.Router();
 
 router.post('/', (req, res) => {
-  try {
-    const newUserInfo = toNewUser(req.body);
-    createUser(newUserInfo)
-      .then(() => res.send('created'))
-      .catch(e => {
-        console.log(e);
-      });
-  } catch {
-    res.sendStatus(401);
-  }
+  const newUserInfo = toNewUser(req.body);
+  createUser(newUserInfo)
+    .then(() =>
+      res
+        .json({
+          status: 'created',
+        })
+        .status(200),
+    )
+    .catch(e => {
+      console.log(e);
+      res
+        .json({
+          status: 'failed',
+        })
+        .status(400);
+    });
 });
 
 export default router;
