@@ -31,12 +31,12 @@ export const authenticateUser = async (
   const hashedInputPassword = generateHash(user.password);
   const requestedUser = await retrieveUser(user.username);
   if (requestedUser.password === hashedInputPassword) {
-    // const secret = String(process.env.TOKEN_SECRET);
+    const secret = String(process.env.TOKEN_SECRET);
     const token = jwt.sign(
       {
         username: user.username,
       },
-      'asdawadf',
+      secret,
       {
         expiresIn: '1800s',
       },

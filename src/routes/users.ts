@@ -1,6 +1,7 @@
 import express from 'express';
 import { authenticateUser, createUser } from '../services/userServices';
 import toNewUser from '../utils/usersUtils';
+import authenticateToken from '../middlewares/securityMiddlewares';
 
 const router = express.Router();
 
@@ -42,6 +43,10 @@ router.post('/login', (req, res) => {
         })
         .status(400);
     });
+});
+
+router.get('/protected_endpoint', authenticateToken, (req, res) => {
+  res.json(req.body).status(200);
 });
 
 export default router;
