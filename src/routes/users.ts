@@ -1,5 +1,5 @@
 import express from 'express';
-import { createUser } from '../services/userServices';
+import { authenticateUser, createUser } from '../services/userServices';
 import toNewUser from '../utils/usersUtils';
 
 const router = express.Router();
@@ -19,6 +19,26 @@ router.post('/', (req, res) => {
       res
         .json({
           status: 'failed',
+        })
+        .status(400);
+    });
+});
+
+router.post('/login', (req, res) => {
+  const userInfo = toNewUser(req.body);
+  authenticateUser(userInfo)
+    .then(token => {
+      res.json({
+        status: 'success',
+        token,
+      });
+    })
+    .catch(error => {
+      console.log(error);
+      res
+        .json({
+          status: 'failed',
+          message: error,
         })
         .status(400);
     });
