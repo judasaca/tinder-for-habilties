@@ -6,3 +6,8 @@ export interface newContractEntry {
   work_hours: number;
   details: string;
 }
+
+interface ContractsResponse {
+  boss_contracts: Contract[];
+  employee_contracts: Contract[];
+}

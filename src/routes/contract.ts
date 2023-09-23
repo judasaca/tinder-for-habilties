@@ -2,6 +2,7 @@ import { Router } from 'express';
 import authenticateToken from '../middlewares/securityMiddlewares';
 import {
   createContract,
+  retrieveContracts,
   toNewContractEntry,
 } from '../services/contractServices';
 
@@ -20,6 +21,19 @@ router.post('/', authenticateToken, (req, res) => {
     .then(newContract => {
       res.status(200).json(newContract);
     })
+    .catch(e => {
+      res.status(400).json({ message: e.message });
+    });
+});
+
+router.get('/', authenticateToken, (req, res) => {
+  const { username } = req.body.verified_user;
+  retrieveContracts(username)
+    .then(c =>
+      res.status(200).json({
+        contracts: c,
+      }),
+    )
     .catch(e => {
       res.status(400).json({ message: e.message });
     });

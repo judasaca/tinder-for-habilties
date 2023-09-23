@@ -1,7 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 import type { Contract } from '@prisma/client';
 
-import type { newContractEntry } from '../types/contract';
+import type { ContractsResponse, newContractEntry } from '../types/contract';
 
 const prisma = new PrismaClient();
 export const toNewContractEntry = (req: any): newContractEntry => {
@@ -47,4 +47,28 @@ export const createContract = async (
     },
   });
   return post;
+};
+
+export const retrieveContracts = async (
+  username: string,
+): Promise<ContractsResponse> => {
+  const user = await prisma.user.findUnique({
+    where: {
+      username,
+    },
+  });
+  const bossContracts = await prisma.contract.findMany({
+    where: {
+      bossId: user?.id,
+    },
+  });
+  const employeeContracts = await prisma.contract.findMany({
+    where: {
+      employeeId: user?.id,
+    },
+  });
+  return {
+    boss_contracts: bossContracts,
+    employee_contracts: employeeContracts,
+  };
 };
