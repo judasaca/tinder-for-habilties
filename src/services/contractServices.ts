@@ -49,7 +49,7 @@ export const createContract = async (
       employeeId: employee.id,
     },
   });
-  const transaction = await createTransaction(contract);
+  const transaction = await createTransaction(contract, 'ACCEPT_CONTRACT');
   return {
     created_contract: contract,
     related_transaction: transaction,

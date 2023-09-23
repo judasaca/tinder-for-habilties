@@ -31,8 +31,8 @@ Table transactions {
 Table contracts {
   id integer [primary key]
   name varchar
-  employer integer [note: 'Who maeke the payments']
-  employee integer [note: 'Who works']
+  bossId integer [note: 'Who maeke the payments']
+  employeeId integer [note: 'Who works']
   status varchar [note: "reviewing-accepted-rejected-finished-canceled"]
   created_at timestamp
   updated_at timestamp
@@ -41,8 +41,8 @@ Table contracts {
   details varchar
 }
 
-Ref: contracts.employee > users.id // many-to-one
-Ref: contracts.employer > users.id // many-to-one
+Ref: contracts.employeeId > users.id // many-to-one
+Ref: contracts.bossId > users.id // many-to-one
 
 Ref: users.id < califications.user_id
 Ref: califications.contract_id > contracts.id
