@@ -1,3 +1,5 @@
+import type { Contract, Transaction } from '@prisma/client';
+
 export interface newContractEntry {
   name: string;
   boss: string;
@@ -10,4 +12,9 @@ export interface newContractEntry {
 interface ContractsResponse {
   boss_contracts: Contract[];
   employee_contracts: Contract[];
+}
+
+interface CreateContractResponse {
+  created_contract: Contract;
+  related_transaction: Transaction;
 }

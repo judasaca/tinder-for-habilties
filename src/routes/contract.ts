@@ -11,9 +11,9 @@ const router = Router();
 router.post('/', authenticateToken, (req, res) => {
   const { username } = req.body.verified_user;
   const contractEntry = toNewContractEntry(req.body);
-  if (contractEntry.boss !== username && contractEntry.employee !== username) {
+  if (contractEntry.boss !== username) {
     res.status(400).json({
-      message: 'Bad request. You must be the boss or the employee.',
+      message: 'Only bosses are allowed to make a contract.',
     });
     return;
   }

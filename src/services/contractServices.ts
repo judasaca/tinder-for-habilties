@@ -1,7 +1,10 @@
 import { PrismaClient } from '@prisma/client';
-import type { Contract } from '@prisma/client';
-
-import type { ContractsResponse, newContractEntry } from '../types/contract';
+import type {
+  ContractsResponse,
+  CreateContractResponse,
+  newContractEntry,
+} from '../types/contract';
+import { createTransaction } from './transactionServices';
 
 const prisma = new PrismaClient();
 export const toNewContractEntry = (req: any): newContractEntry => {
@@ -18,7 +21,7 @@ export const toNewContractEntry = (req: any): newContractEntry => {
 
 export const createContract = async (
   contractEntry: newContractEntry,
-): Promise<Contract> => {
+): Promise<CreateContractResponse> => {
   const employeeUserName = contractEntry.employee;
   const bossUserName = contractEntry.boss;
   const boss = await prisma.user.findUnique({
@@ -36,7 +39,7 @@ export const createContract = async (
   if (boss.id === employee.id)
     throw new Error('Employee and boss must be different.');
 
-  const post = await prisma.contract.create({
+  const contract = await prisma.contract.create({
     data: {
       details: contractEntry.details,
       hourlyRate: contractEntry.hourly_rate,
@@ -46,7 +49,11 @@ export const createContract = async (
       employeeId: employee.id,
     },
   });
-  return post;
+  const transaction = await createTransaction(contract);
+  return {
+    created_contract: contract,
+    related_transaction: transaction,
+  };
 };
 
 export const retrieveContracts = async (
