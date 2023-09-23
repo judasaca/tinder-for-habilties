@@ -38,7 +38,7 @@ export const authenticateUser = async (
       },
       secret,
       {
-        expiresIn: '1800s',
+        expiresIn: process.env.TOKEN_LIFE_TIME,
       },
     );
     return token;
