@@ -15,3 +15,40 @@ export const createTransaction = async (
   });
   return result;
 };
+
+export const retrieveActiveAtransactions = async (
+  username: string,
+): Promise<Transaction[]> => {
+  //   const contracts = prisma.contract.findMany({
+  //     where: {
+  //       OR: [
+  //         {
+  //           bossId: userId,
+  //         },
+  //         {
+  //           employeeId: userId,
+  //         },
+  //       ],
+  //     },
+  //   });
+  const transactions = await prisma.transaction.findMany({
+    where: {
+      status: 'WAITING',
+      contract: {
+        OR: [
+          {
+            boss: {
+              username,
+            },
+          },
+          {
+            employee: {
+              username,
+            },
+          },
+        ],
+      },
+    },
+  });
+  return transactions;
+};
