@@ -35,13 +35,10 @@ router.post('/login', (req, res) => {
       });
     })
     .catch(error => {
-      console.log(error);
-      res
-        .json({
-          status: 'failed',
-          message: error,
-        })
-        .status(400);
+      res.status(400).json({
+        status: 'failed',
+        message: error.message,
+      });
     });
 });
 
